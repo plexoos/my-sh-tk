@@ -13,3 +13,19 @@ where awk variables are:
 
     an: current author name   cmits: number of commits                    ladd: lines added
                               files: number of non-unique files changed   ldel: lines deleted
+
+
+ffmpeg
+======
+
+To trim an mp3 file:
+
+    $ ffmpeg -ss 00:01:10 -i input_file.mp3 -t 00:04:30 -acodec copy output_file.mp3
+
+To re-map audio streams:
+
+    $ ffmpeg -fflags genpts -i input_file.avi -map 0:0 -map 0:2 -map 0:1 -c:v copy -c:a:0 copy -c:a:1 copy output_file.mkv
+
+To re-encode video using a different codec and keeping audio intact:
+
+    $ ffmpeg  -i input_file.avi -b:v 1280k -vcodec mpeg4 -acodec copy output_file.avi
