@@ -15,6 +15,16 @@ where awk variables are:
                               files: number of non-unique files changed   ldel: lines deleted
 
 
+rclone
+======
+
+Nice utility for copying files to Google Drive using command line in linux.
+Straightforward configuration and usage:
+
+    $ rclone config
+    $ rclone copy my_dir/sub_dir gdrive:public/my_dir/sub_dir
+
+
 ffmpeg
 ======
 
