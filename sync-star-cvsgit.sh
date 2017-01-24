@@ -1,4 +1,40 @@
 #!/usr/bin/env bash
+#
+# In this script we copy select CVS modules from a large CVS repository to
+# a single Git repository. The mapping of CVS modules to Git repositories is
+# controlled by $CVSGIT_MODULE_MAP defined below.
+#
+# Prerequisites
+# -------------
+#
+# - The environment variable $CVSROOT must contain the path to the CVS
+# repository with the CVSROOT/ subdirectory.
+#
+# - A 'cvs_authors' file mapping CVS user names to personal names and emails.
+# E.g.
+#
+#     cat cvs_authors
+#     cvsuser1=John Doe <doe@somewhere.com>
+#     cvsuser2=Jane Roe <roe@somewhereelse.com>
+#     ...
+#
+# How to use
+# ----------
+#
+# When export for the first time use the 'init' mode to create a new git
+# repository. E.g.:
+#
+#     sync-star-cvsgit.sh muDst init
+#
+# For subsequent updates of an existing git repository use the 'update' mode.
+# E.g.:
+#
+#     sync-star-cvsgit.sh bfchain [update]
+#
+# To export a commit from a git repository to CVS:
+#
+#     git cvsexportcommit -w /path/to/cvs/checkout -v -u -p -c <sha1_id>
+#
 
 
 # Set typical default values for script variables
@@ -49,7 +85,7 @@ then
    LOCAL_GIT_DIR="${LOCAL_GIT_DIR}/star-${CVSGIT_MODULE}"
 else
    echo "ERROR: First parameter must be provided:"
-   echo "$ ${0##*/} fgt|vertex [update|init]"
+   echo "$ ${0##*/} muDst|fgt|vertex [update|init]"
    exit 1
 fi
 
@@ -65,7 +101,8 @@ then
    fi
 fi
 
-echo "The following env variables are set:"
+# Just print out the variable's values for the record
+echo "The following variables are set:"
 echo -e "\t CVSGIT_MODULE:      \"$CVSGIT_MODULE\""
 echo -e "\t LOCAL_CVSROOT_DIR:  \"$LOCAL_CVSROOT_DIR\""
 echo -e "\t LOCAL_GIT_DIR:      \"$LOCAL_GIT_DIR\""
@@ -108,7 +145,8 @@ git stash
 git rev-parse --verify cvs/master
 CVSGIT_BRANCH_EXISTS="$?"
 
-# Define command to import from cvs to git. also works when run for the first time
+# Define command to import from cvs to git. Also works when run for the first
+# time in 'init' mode
 cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
 
 if [ "$CVSGIT_MODE" == "init" ]
