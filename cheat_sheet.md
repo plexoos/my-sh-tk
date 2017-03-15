@@ -15,6 +15,25 @@ where awk variables are:
                               files: number of non-unique files changed   ldel: lines deleted
 
 
+LaTeX
+=====
+
+Recursively find and convert all .png files in current directory `.` to
+efficient eps3 format:
+
+    $ find . -name *.png -printf "%p\n" | awk -F ".png" '{print "convert "$1".png "$1".eps3; mv "$1".eps3 "$1".eps"}' | sh
+
+How to pass and recognize user options in a latex file. For example, in myfile.tex:
+
+    \ifdefined\isdraft
+       \documentclass[25pt, landscape, draft]{foils}
+    \else
+       \documentclass[25pt, landscape, final]{foils}
+    \fi
+
+    $ latex "\def\isdraft{1} \input{myfile.tex}"
+
+
 rclone
 ======
 
