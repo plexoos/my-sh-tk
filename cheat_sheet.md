@@ -15,6 +15,14 @@ where awk variables are:
                               files: number of non-unique files changed   ldel: lines deleted
 
 
+find
+====
+
+Find files with name matching a regex
+
+    $ find . -regextype posix-egrep -regex ".*\.(h|hh|cxx|cc|c)$"
+
+
 LaTeX
 =====
 
