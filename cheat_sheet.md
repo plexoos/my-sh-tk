@@ -42,6 +42,24 @@ How to pass and recognize user options in a latex file. For example, in myfile.t
     $ latex "\def\isdraft{1} \input{myfile.tex}"
 
 
+Code Profiling: callgrind, qcachegrind
+======================================
+
+For profiling studies on Mac OS it helps to have a few tools installed. I use
+`macports` to instal the following useful ports:
+
+* qcachegrind
+* python3.4
+* py34-pip
+* graphviz
+* gprof2dot
+
+Produce a pdf call graph in two steps:
+
+    $ gprof2dot -f callgrind -s -o callgrind.dot ./callgrind.out.#####
+    $ dot -Tpdf -o callgrind.pdf callgrind.dot
+
+
 rclone
 ======
 
