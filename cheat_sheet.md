@@ -14,6 +14,10 @@ where awk variables are:
     an: current author name   cmits: number of commits                    ladd: lines added
                               files: number of non-unique files changed   ldel: lines deleted
 
+To show a list of commits on one branch but not another:
+
+    $ git log oldbranch ^newbranch --no-merges
+
 
 find
 ====
