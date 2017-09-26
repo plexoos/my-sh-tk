@@ -1,3 +1,11 @@
+Vim
+===
+
+Substitute all characters in a visual block with spaces:
+
+    :%s/\%V.\%V/ /g
+
+
 Git
 ===
 
