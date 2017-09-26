@@ -71,6 +71,11 @@ Produce a pdf call graph in two steps:
     $ gprof2dot -f callgrind -s -o callgrind.dot ./callgrind.out.#####
     $ dot -Tpdf -o callgrind.pdf callgrind.dot
 
+`perf` is another useful utility to time a program. It can provide statistical
+results from a few independent runs:
+
+    $perf stat -r10
+
 
 rclone
 ======
