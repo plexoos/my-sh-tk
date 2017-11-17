@@ -38,7 +38,7 @@
 
 
 # Set typical default values for script variables
-: ${LOCAL_CVSROOT_DIR:="${HOME}/local-star-cvsroot"}
+: ${LOCAL_CVSROOT_DIR:="${HOME}/local-star-cvs"}
 : ${LOCAL_GIT_DIR:="${HOME}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
 : ${CVSGIT_AUTHORS:="${HOME}/cvs_authors"}
@@ -150,7 +150,7 @@ cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GI
 if [ "$CVSGIT_MODE" == "init" ]
 then
    echo $ $cmd_git_cvsimport
-   $cmd_git_cvsimport&> /dev/null
+   $cmd_git_cvsimport &> /dev/null
    exit 0
 fi
 
