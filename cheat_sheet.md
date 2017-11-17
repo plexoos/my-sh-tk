@@ -35,6 +35,15 @@ Find files with name matching a regex
     $ find . -regextype posix-egrep -regex ".*\.(h|hh|cxx|cc|c)$"
 
 
+ssh
+===
+
+Forward jupyter notebook server running on remotehost:8888
+
+    ssh login@gateway
+    ssh -N -f -L 8888:localhost:8888 login@remotehost
+
+
 LaTeX
 =====
 
