@@ -143,11 +143,6 @@ echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
 cd ${LOCAL_GIT_DIR}
 
-# In case there are local changes stash them
-git stash
-git rev-parse --verify cvs/master
-CVSGIT_BRANCH_EXISTS="$?"
-
 # Define command to import from cvs to git. Also works when run for the first
 # time in 'init' mode
 cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
@@ -158,6 +153,11 @@ then
    $cmd_git_cvsimport&> /dev/null
    exit 0
 fi
+
+# In case there are local changes stash them
+git stash
+git rev-parse --verify cvs/master
+CVSGIT_BRANCH_EXISTS="$?"
 
 # Check the exit code of the previous command
 if [ "$CVSGIT_BRANCH_EXISTS" -eq "0" ]
