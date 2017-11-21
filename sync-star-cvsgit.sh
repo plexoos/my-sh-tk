@@ -78,6 +78,7 @@ CVSGIT_MODULE_MAP["trigger"]="StTriggerData StTriggerDataMaker StTriggerUtilitie
 CVSGIT_MODULE_MAP["daq"]="StDaqLib StDAQMaker"
 CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
 CVSGIT_MODULE_MAP["phys"]="StGammaMaker StJetFinder StJetMaker"
+CVSGIT_MODULE_MAP["jet"]="StJetFinder StJetMaker StSpinPool/StJetEvent StSpinPool/StJetSkimEvent StSpinPool/StJets StSpinPool/StUeEvent"
 #CVSGIT_MODULE_MAP["db-calibrations"]="Calibrations"
 #CVSGIT_MODULE_MAP["pams"]="pams/global"
 
@@ -113,11 +114,11 @@ echo -e "\t CVS_TOP_MODULE:     \"$CVS_TOP_MODULE\""
 echo -e "\t CVSGIT_AUTHORS:     \"$CVSGIT_AUTHORS\""
 
 
-mkdir -p ${LOCAL_CVSROOT_DIR}
-mkdir -p ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}
-mkdir -p ${LOCAL_GIT_DIR}
+mkdir -p "${LOCAL_CVSROOT_DIR}"
+mkdir -p "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}"
+mkdir -p "${LOCAL_GIT_DIR}"
 
-ln -fs ../CVSROOT ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/
+ln -fs ../CVSROOT "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
 
 # Sync local CVSROOT with the central CVS repository
 cmd="rsync -a --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
@@ -141,7 +142,7 @@ done
 echo
 echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
-cd ${LOCAL_GIT_DIR}
+cd "${LOCAL_GIT_DIR}" || exit
 
 # Define command to import from cvs to git. Also works when run for the first
 # time in 'init' mode
@@ -184,7 +185,7 @@ then
    echo -e "Found remote origin/master"
 else
    echo -e "Remote origin/master not found. Creating one..."
-   git remote add origin git@github.com:star-bnl/star-${CVSGIT_MODULE}.git
+   git remote add origin "git@github.com:star-bnl/star-${CVSGIT_MODULE}.git"
    git fetch origin
 fi
 
