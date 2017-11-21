@@ -78,6 +78,7 @@ CVSGIT_MODULE_MAP["trigger"]="StTriggerData StTriggerDataMaker StTriggerUtilitie
 CVSGIT_MODULE_MAP["daq"]="StDaqLib StDAQMaker"
 CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
 CVSGIT_MODULE_MAP["phys"]="StGammaMaker StJetFinder StJetMaker"
+CVSGIT_MODULE_MAP["jet"]="StJetFinder StJetFinder StSpinPool/StJetEvent StSpinPool/StJetSkimEvent StSpinPool/StJets StSpinPool/StUeEvent"
 #CVSGIT_MODULE_MAP["db-calibrations"]="Calibrations"
 #CVSGIT_MODULE_MAP["pams"]="pams/global"
 
