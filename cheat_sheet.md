@@ -32,7 +32,7 @@ find
 
 Find files with name matching a regex
 
-    $ find . -regextype posix-egrep -regex ".*\.(h|hh|cxx|cc|c)$"
+    $ find . -regextype posix-egrep -regex ".*\.(h|hh|cxx|cpp|cc|c|inc)$"
 
 
 ssh
