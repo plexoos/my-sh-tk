@@ -80,7 +80,10 @@ CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
 CVSGIT_MODULE_MAP["phys"]="StGammaMaker StJetFinder StJetMaker"
 CVSGIT_MODULE_MAP["jet"]="StJetFinder StJetMaker StSpinPool/StJetEvent StSpinPool/StJetSkimEvent StSpinPool/StJets StSpinPool/StUeEvent"
 #CVSGIT_MODULE_MAP["db-calibrations"]="Calibrations"
-#CVSGIT_MODULE_MAP["pams"]="pams/global"
+# pams is outside of StRoot therefore it requires CVS_TOP_MODULE=pams
+#CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
+# vmc is outside of StRoot therefore it requires CVS_TOP_MODULE=StarVMC
+#CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
 
 # Check input arguments provided by user
 if [ -n "$1" ]
