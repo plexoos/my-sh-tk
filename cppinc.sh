@@ -60,12 +60,12 @@ for ((i=0; i<${#headers[@]}; ++i)); do
    new_header=$(sed -e 's/[\/&]/\\&/g' <<< "$new_header")
 
    mycmd="sed 's/${current_header}/${new_header}/g' <<< '${current_include}'"
-   new_include=$(eval $mycmd)
+   new_include=$(eval "${mycmd}")
 
    # Escape slashes / 
-   new_include_escaped=$(sed -e 's/[\/&]/\\&/g' <<< "$new_include")
+   new_include_escaped=$(sed -e 's/[\/&]/\\&/g' <<< "${new_include}")
 
    mycmd="sed -i 's/${current_include}/${new_include_escaped}/g' $INPUT_FILE"
    echo -e "\t${current_include} ---> ${new_include}"
-   eval $mycmd
+   eval "${mycmd}"
 done
