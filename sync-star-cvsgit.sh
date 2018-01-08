@@ -79,8 +79,9 @@ CVSGIT_MODULE_MAP["db"]="StDbBroker StDbLib St_db_Maker StDbUtilities StDetector
 CVSGIT_MODULE_MAP["trigger"]="StTriggerData StTriggerDataMaker StTriggerUtilities StTrgDatFileReader StTrgMaker"
 CVSGIT_MODULE_MAP["daq"]="StDaqLib StDAQMaker"
 CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
-CVSGIT_MODULE_MAP["phys"]="StGammaMaker StJetFinder StJetMaker"
-CVSGIT_MODULE_MAP["jet"]="StJetFinder StJetMaker StSpinPool/StJetEvent StSpinPool/StJetSkimEvent StSpinPool/StJets StSpinPool/StUeEvent"
+CVSGIT_MODULE_MAP["phys"]="StGammaMaker StRefMultCorr StJetFinder StJetMaker StSpinPool StHeavyTagMaker \
+   StHighPtTagsMaker StTagsMaker St_QA_Maker StAnalysisMaker StAnalysisUtilities \
+   "
 
 # pams is outside of StRoot therefore it requires CVS_TOP_MODULE=pams
 CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
