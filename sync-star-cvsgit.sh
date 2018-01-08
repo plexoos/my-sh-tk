@@ -49,10 +49,8 @@
 # Predefined map linking CVS modules to proposed git repositories
 declare -A CVSGIT_MODULE_MAP
 
-CVSGIT_MODULE_MAP["base"]="St_base StChain StarRoot Star2Root StarClassLibrary StarMagField StMagF StStarLogger StTreeMaker StIOMaker StBichsel StUtilities"
+CVSGIT_MODULE_MAP["base"]="macros Star2Root StarClassLibrary StarMagField StarRoot St_base StBFChain StBichsel StChain StIOMaker StMagF StStarLogger StTreeMaker StUtilities"
 CVSGIT_MODULE_MAP["stevent"]="StAssociationMaker StEvent StEventCompendiumMaker StEventMaker StEventUtilities StMcEvent StMcEventMaker"
-CVSGIT_MODULE_MAP["bfchain"]="StBFChain"
-CVSGIT_MODULE_MAP["macros"]="macros"
 CVSGIT_MODULE_MAP["picoDst"]="StPicoDstMaker StPicoEvent"
 CVSGIT_MODULE_MAP["muDst"]="StMuDSTMaker StStrangeMuDstMaker"
 CVSGIT_MODULE_MAP["tpc"]="StTpcCalibrationMaker StTpcDb StTpcEvalMaker StTpcHitMaker StTpcHitMoverMaker StTpcPool StTpcRSMaker StTpcTagMaker"
