@@ -10,10 +10,10 @@
 # - The environment variable $CVSROOT must contain the path to the CVS
 # repository with the CVSROOT/ subdirectory.
 #
-# - A 'cvs_authors' file mapping CVS user names to personal names and emails.
+# - A 'star-cvsgit-authors.txt' file mapping CVS user names to personal names and emails.
 # E.g.
 #
-#     cat cvs_authors
+#     cat star-cvsgit-authors.txt
 #     cvsuser1=John Doe <doe@somewhere.com>
 #     cvsuser2=Jane Roe <roe@somewhereelse.com>
 #     ...
@@ -38,10 +38,10 @@
 
 
 # Set typical default values for script variables
-: ${LOCAL_CVSROOT_DIR:="${HOME}/local-star-cvs"}
+: ${LOCAL_CVSROOT_DIR:="${HOME}/star-cvs"}
 : ${LOCAL_GIT_DIR:="${HOME}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
-: ${CVSGIT_AUTHORS:="${HOME}/cvs_authors"}
+: ${CVSGIT_AUTHORS:="star-cvsgit-authors.txt"}
 : ${CVSGIT_MODE:="update"}
 
 
@@ -79,11 +79,11 @@ CVSGIT_MODULE_MAP["daq"]="StDaqLib StDAQMaker"
 CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
 CVSGIT_MODULE_MAP["phys"]="StGammaMaker StJetFinder StJetMaker"
 CVSGIT_MODULE_MAP["jet"]="StJetFinder StJetMaker StSpinPool/StJetEvent StSpinPool/StJetSkimEvent StSpinPool/StJets StSpinPool/StUeEvent"
-#CVSGIT_MODULE_MAP["db-calibrations"]="Calibrations"
+
 # pams is outside of StRoot therefore it requires CVS_TOP_MODULE=pams
-#CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
+CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
 # vmc is outside of StRoot therefore it requires CVS_TOP_MODULE=StarVMC
-#CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
+CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
 
 # Check input arguments provided by user
 if [ -n "$1" ]
@@ -116,7 +116,7 @@ echo -e "\t LOCAL_GIT_DIR:      \"$LOCAL_GIT_DIR\""
 echo -e "\t CVS_TOP_MODULE:     \"$CVS_TOP_MODULE\""
 echo -e "\t CVSGIT_AUTHORS:     \"$CVSGIT_AUTHORS\""
 
-
+# Create output directories
 mkdir -p "${LOCAL_CVSROOT_DIR}"
 mkdir -p "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}"
 mkdir -p "${LOCAL_GIT_DIR}"
@@ -127,7 +127,7 @@ ln -fs ../CVSROOT "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
 cmd="rsync -a --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
 
 echo
-echo ---\> Updating local CVSROOT dir... ${LOCAL_CVSROOT_DIR}/CVSROOT
+echo ---\> Updating local CVSROOT directory... ${LOCAL_CVSROOT_DIR}/CVSROOT
 echo $ $cmd
 echo
 $cmd
@@ -145,20 +145,22 @@ done
 echo
 echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
-cd "${LOCAL_GIT_DIR}" || exit
-
-# Define command to import from cvs to git. Also works when run for the first
-# time in 'init' mode
+# Define the main command to import from cvs to git. Also works when run for the
+# first time in 'init' mode
 cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
 
+# If this is the first time import just execute the import command and exit
 if [ "$CVSGIT_MODE" == "init" ]
 then
-   echo $ $cmd_git_cvsimport
-   $cmd_git_cvsimport &> /dev/null
+   echo $ ${cmd_git_cvsimport}
+   ${cmd_git_cvsimport} &> /dev/null
    exit 0
 fi
 
-# In case there are local changes stash them
+# Proceed only in case of update
+cd "${LOCAL_GIT_DIR}" || exit
+
+# In case there are local changes stash them first
 git stash
 git rev-parse --verify cvs/master
 CVSGIT_BRANCH_EXISTS="$?"
@@ -176,9 +178,9 @@ fi
 
 git checkout -B cvs cvs/master
 
-# The following command also works when run for the first time
-echo $ $cmd_git_cvsimport
-$cmd_git_cvsimport&> /dev/null
+# Run the main cvs-import/git-update command
+echo $ ${cmd_git_cvsimport}
+${cmd_git_cvsimport} &> /dev/null
 
 git ls-remote --exit-code . origin/master &> /dev/null
 
@@ -196,9 +198,5 @@ git remote -v
 git push origin cvs
 git push --tags
 git checkout -B master origin/master
-
-# Have not yet decided if the following should be executed by default
-#git merge cvs
-#git push origin master
 
 exit 0
