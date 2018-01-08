@@ -26,8 +26,8 @@ echo "File to modify: $INPUT_FILE"
 echo "Base include directory: $BASE_INC_DIR"
 
 # Parse input file for C++ #include statements
-includes_str=$(gawk 'match($0,"#[[:space:]]*include([ \t]+)([\"<])(.*)([\">])",a){printf a[0]","}' $INPUT_FILE)
-headers_str=$(gawk 'match($0,"#[[:space:]]*include([ \t]+)([\"<])(.*)([\">])",a){printf a[3]","}' $INPUT_FILE)
+includes_str=$(gawk 'match($0,"#[[:space:]]*include[[:space:]]*([\"<])(.*)([\">])",a){printf a[0]","}' $INPUT_FILE)
+headers_str=$(gawk 'match($0,"#[[:space:]]*include[[:space:]]*([\"<])(.*)([\">])",a){printf a[2]","}' $INPUT_FILE)
 
 IFS=',' read -a includes <<< "$includes_str"
 IFS=',' read -a headers  <<< "$headers_str"
