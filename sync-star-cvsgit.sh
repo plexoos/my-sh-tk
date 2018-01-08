@@ -60,6 +60,7 @@ CVSGIT_MODULE_MAP["ftpc"]="StFtpcCalibMaker StFtpcClusterMaker StFtpcDriftMapMak
 CVSGIT_MODULE_MAP["ist"]="StIstClusterMaker StIstDbMaker StIstHitMaker StIstRawHitMaker StIstSimMaker StIstUtil"
 CVSGIT_MODULE_MAP["pxl"]="StPxlClusterMaker StPxlDbMaker StPxlHitMaker StPxlRawHitMaker StPxlSimMaker StPxlUtil"
 CVSGIT_MODULE_MAP["mtd"]="StMtdCalibMaker StMtdEvtFilterMaker StMtdHitMaker StMtdMatchMaker StMtdQAMaker StMtdSimMaker StMtdUtil"
+CVSGIT_MODULE_MAP["pmd"]="StPmdCalibrationMaker StPmdClusterMaker StPmdDiscriminatorMaker StPmdReadMaker StPmdSimulatorMaker StPmdUtil"
 CVSGIT_MODULE_MAP["hbt"]="StHbtMaker"
 CVSGIT_MODULE_MAP["fgt"]="StFgtA2CMaker StFgtClusterMaker StFgtDbMaker StFgtPointMaker StFgtPool StFgtRawMaker StFgtSimulatorMaker StFgtUtil"
 CVSGIT_MODULE_MAP["emc"]="StEmcADCtoEMaker StEmcCalibrationMaker StEmcMixerMaker StEmcPool StEmcRawMaker StEmcSimulatorMaker StEmcTriggerMaker StEmcUtil tEEmcDbMaker tEEmcPool tEEmcSimulatorMaker tEEmcUtil"
