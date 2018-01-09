@@ -53,21 +53,25 @@ CVSGIT_MODULE_MAP["base"]="macros Star2Root StarClassLibrary StarMagField StarRo
 CVSGIT_MODULE_MAP["stevent"]="StAssociationMaker StEvent StEventCompendiumMaker StEventMaker StEventUtilities StMcEvent StMcEventMaker"
 CVSGIT_MODULE_MAP["picoDst"]="StPicoDstMaker StPicoEvent"
 CVSGIT_MODULE_MAP["muDst"]="StMuDSTMaker StStrangeMuDstMaker"
-CVSGIT_MODULE_MAP["tpc"]="StTpcCalibrationMaker StTpcDb StTpcEvalMaker StTpcHitMaker StTpcHitMoverMaker StTpcPool StTpcRSMaker StTpcTagMaker"
-CVSGIT_MODULE_MAP["ftpc"]="StFtpcCalibMaker StFtpcClusterMaker StFtpcDriftMapMaker StFtpcMixerMaker StFtpcSlowSimMaker StFtpcTrackMaker"
-CVSGIT_MODULE_MAP["ist"]="StIstClusterMaker StIstDbMaker StIstHitMaker StIstRawHitMaker StIstSimMaker StIstUtil"
-CVSGIT_MODULE_MAP["pxl"]="StPxlClusterMaker StPxlDbMaker StPxlHitMaker StPxlRawHitMaker StPxlSimMaker StPxlUtil"
-CVSGIT_MODULE_MAP["mtd"]="StMtdCalibMaker StMtdEvtFilterMaker StMtdHitMaker StMtdMatchMaker StMtdQAMaker StMtdSimMaker StMtdUtil"
-CVSGIT_MODULE_MAP["pmd"]="StPmdCalibrationMaker StPmdClusterMaker StPmdDiscriminatorMaker StPmdReadMaker StPmdSimulatorMaker StPmdUtil"
-CVSGIT_MODULE_MAP["hbt"]="StHbtMaker"
-CVSGIT_MODULE_MAP["fgt"]="StFgtA2CMaker StFgtClusterMaker StFgtDbMaker StFgtPointMaker StFgtPool StFgtRawMaker StFgtSimulatorMaker StFgtUtil"
-CVSGIT_MODULE_MAP["emc"]="StEmcADCtoEMaker StEmcCalibrationMaker StEmcMixerMaker StEmcPool StEmcRawMaker StEmcSimulatorMaker StEmcTriggerMaker StEmcUtil StEEmcDbMaker StEEmcPool StEEmcSimulatorMaker StEEmcUtil StPreEclMaker StEpcMaker"
-CVSGIT_MODULE_MAP["epd"]="StEpdDbMaker"
-CVSGIT_MODULE_MAP["tof"]="StBTofCalibMaker StBTofHitMaker StBTofMatchMaker StBTofMixerMaker StBTofPool StBTofSimMaker StBTofUtil StTofCalibMaker StTofHitMaker StTofMaker StTofPool StTofSimMaker StTofUtil StTofpMatchMaker StTofrMatchMaker"
-CVSGIT_MODULE_MAP["fms"]="StFmsDbMaker StFmsFastSimulatorMaker StFmsFpsMaker StFmsHitMaker StFmsPointMaker StFmsUtil"
-CVSGIT_MODULE_MAP["vpd"]="StVpdCalibMaker StVpdSimMaker"
-CVSGIT_MODULE_MAP["svt"]="StSvtAlignMaker StSvtCalibMaker StSvtClassLibrary StSvtClusterMaker StSvtDaqMaker StSvtDbMaker StSvtPool StSvtSelfMaker StSvtSeqAdjMaker StSvtSimulationMaker"
-CVSGIT_MODULE_MAP["ssd"]="StSstDaqMaker StSstPointMaker StSstUtil StSsdClusterMaker StSsdDaqMaker StSsdDbMaker StSsdEvalMaker StSsdFastSimMaker StSsdPointMaker StSsdSimulationMaker StSsdUtil"
+CVSGIT_MODULE_MAP["detectors"]="StTpcCalibrationMaker StTpcDb StTpcEvalMaker StTpcHitMaker StTpcHitMoverMaker \
+   StTpcPool StTpcRSMaker StTpcTagMaker StdEdxY2Maker \
+   StFtpcCalibMaker StFtpcClusterMaker StFtpcDriftMapMaker StFtpcMixerMaker StFtpcSlowSimMaker StFtpcTrackMaker \
+   StIstClusterMaker StIstDbMaker StIstHitMaker StIstRawHitMaker StIstSimMaker StIstUtil \
+   StPxlClusterMaker StPxlDbMaker StPxlHitMaker StPxlRawHitMaker StPxlSimMaker StPxlUtil \
+   StMtdCalibMaker StMtdEvtFilterMaker StMtdHitMaker StMtdMatchMaker StMtdQAMaker StMtdSimMaker StMtdUtil \
+   StPmdCalibrationMaker StPmdClusterMaker StPmdDiscriminatorMaker StPmdReadMaker StPmdSimulatorMaker StPmdUtil \
+   StHbtMaker \
+   StFgtA2CMaker StFgtClusterMaker StFgtDbMaker StFgtPointMaker StFgtPool StFgtRawMaker StFgtSimulatorMaker StFgtUtil \
+   StEmcADCtoEMaker StEmcCalibrationMaker StEmcMixerMaker StEmcPool StEmcRawMaker StEmcSimulatorMaker StEmcTriggerMaker StEmcUtil \
+   StEEmcDbMaker StEEmcPool StEEmcSimulatorMaker StEEmcUtil StPreEclMaker StEpcMaker \
+   StEpdDbMaker \
+   StBTofCalibMaker StBTofHitMaker StBTofMatchMaker StBTofMixerMaker StBTofPool StBTofSimMaker StBTofUtil \
+   StTofCalibMaker StTofHitMaker StTofMaker StTofPool StTofSimMaker StTofUtil StTofpMatchMaker StTofrMatchMaker \
+   StFmsDbMaker StFmsFastSimulatorMaker StFmsFpsMaker StFmsHitMaker StFmsPointMaker StFmsUtil \
+   StVpdCalibMaker StVpdSimMaker \
+   StSvtAlignMaker StSvtCalibMaker StSvtClassLibrary StSvtClusterMaker StSvtDaqMaker StSvtDbMaker StSvtPool StSvtSelfMaker StSvtSeqAdjMaker StSvtSimulationMaker \
+   StSstDaqMaker StSstPointMaker StSstUtil StSsdClusterMaker StSsdDaqMaker StSsdDbMaker StSsdEvalMaker StSsdFastSimMaker StSsdPointMaker StSsdSimulationMaker StSsdUtil \
+   "
 CVSGIT_MODULE_MAP["sti"]="Sti StiCA StiEmc StiEvaluator StiFtpc StiGui StiIst StiMaker StiPixel StiPxl StiRnD StiSsd StiSvt StiTpc StiUtilities"
 CVSGIT_MODULE_MAP["stv"]="Stv StvMaker StvSeed StvUtil"
 CVSGIT_MODULE_MAP["ca-tracker"]="TPCCATracker"
