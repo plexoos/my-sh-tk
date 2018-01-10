@@ -78,8 +78,8 @@ CVSGIT_MODULE_MAP["ca-tracker"]="TPCCATracker"
 CVSGIT_MODULE_MAP["vertex"]="StGenericVertexMaker StZdcVertexMaker StSecondaryVertexMaker"
 CVSGIT_MODULE_MAP["RTS"]="RTS"
 CVSGIT_MODULE_MAP["db"]="StDbBroker StDbLib St_db_Maker StDbUtilities StDetectorDbMaker"
-CVSGIT_MODULE_MAP["trigger"]="StTriggerData StTriggerDataMaker StTriggerUtilities StTrgDatFileReader StTrgMaker"
-CVSGIT_MODULE_MAP["daq"]="StDaqLib StDAQMaker"
+CVSGIT_MODULE_MAP["daq-trg"]="StDaqLib StDAQMaker StTriggerData StTriggerDataMaker StTriggerUtilities \
+   StTrgDatFileReader StTrgMaker Stl3RawReaderMaker Stl3Util"
 CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
 CVSGIT_MODULE_MAP["phys"]="StGammaMaker StRefMultCorr StJetFinder StJetMaker StSpinPool StHeavyTagMaker \
    StHighPtTagsMaker StTagsMaker St_QA_Maker StAnalysisMaker StAnalysisUtilities \
