@@ -72,9 +72,9 @@ CVSGIT_MODULE_MAP["detectors"]="StTpcCalibrationMaker StTpcDb StTpcEvalMaker StT
    StSvtAlignMaker StSvtCalibMaker StSvtClassLibrary StSvtClusterMaker StSvtDaqMaker StSvtDbMaker StSvtPool StSvtSelfMaker StSvtSeqAdjMaker StSvtSimulationMaker \
    StSstDaqMaker StSstPointMaker StSstUtil StSsdClusterMaker StSsdDaqMaker StSsdDbMaker StSsdEvalMaker StSsdFastSimMaker StSsdPointMaker StSsdSimulationMaker StSsdUtil \
    "
-CVSGIT_MODULE_MAP["sti"]="Sti StiCA StiEmc StiEvaluator StiFtpc StiGui StiIst StiMaker StiPixel StiPxl StiRnD StiSsd StiSvt StiTpc StiUtilities"
-CVSGIT_MODULE_MAP["stv"]="Stv StvMaker StvSeed StvUtil"
-CVSGIT_MODULE_MAP["ca-tracker"]="TPCCATracker"
+CVSGIT_MODULE_MAP["track"]="Sti StiCA StiEmc StiEvaluator StiFtpc StiGui StiIst StiMaker StiPixel StiPxl StiRnD \
+   StiSsd StiSvt StiTpc StiUtilities Stv StvMaker StvSeed StvUtil TPCCATracker \
+   "
 CVSGIT_MODULE_MAP["vertex"]="StGenericVertexMaker StZdcVertexMaker StSecondaryVertexMaker"
 CVSGIT_MODULE_MAP["RTS"]="RTS"
 CVSGIT_MODULE_MAP["db"]="StDbBroker StDbLib St_db_Maker StDbUtilities StDetectorDbMaker"
