@@ -194,6 +194,7 @@ fi
 
 git remote -v
 git push origin cvs
+git push --tags
 git checkout -B master origin/master
 
 # Have not yet decided if the following should be executed by default
