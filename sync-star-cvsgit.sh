@@ -113,6 +113,20 @@ then
    fi
 fi
 
+# Special cases
+case "${CVSGIT_MODULE}" in
+"pams")
+   CVS_TOP_MODULE="pams"
+   ;;
+"StarVMC")
+   CVS_TOP_MODULE="StarVMC"
+   ;;
+*)
+   #do_nothing
+   ;;
+esac
+
+
 # Just print out the variable's values for the record
 echo "The following variables are set:"
 echo -e "\t CVSGIT_MODULE:      \"$CVSGIT_MODULE\""
