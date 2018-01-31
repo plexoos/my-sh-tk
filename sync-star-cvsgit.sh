@@ -89,6 +89,9 @@ CVSGIT_MODULE_MAP["phys"]="StGammaMaker StRefMultCorr StJetFinder StJetMaker StS
 CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
 # vmc is outside of StRoot therefore it requires CVS_TOP_MODULE=StarVMC
 CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
+# All CVS modules into a single git repo, CVS_TOP_MODULE unused
+CVSGIT_MODULE_MAP["soft"]="soft"
+
 
 # Check input arguments provided by user
 if [ -n "$1" ]
@@ -115,6 +118,9 @@ fi
 
 # Special cases
 case "${CVSGIT_MODULE}" in
+"soft")
+   CVS_TOP_MODULE="unused"
+   ;;
 "pams")
    CVS_TOP_MODULE="pams"
    ;;
@@ -154,7 +160,13 @@ $cmd
 # Now sync all local CVS submodules with the central CVS repository
 for CVSGIT_ENTRY in ${CVSGIT_MODULE_MAP[$CVSGIT_MODULE]}
 do
-   cmd="rsync -a --delete -R ${CVSROOT}/./${CVS_TOP_MODULE}/${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+   if [ "$CVSGIT_ENTRY" == "soft" ]
+   then
+      cmd="rsync -a --delete --exclude-from=star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+   else
+      cmd="rsync -a --delete -R ${CVSROOT}/./${CVS_TOP_MODULE}/${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+   fi
+
    echo ---\> Updating local CVS module... ${CVSGIT_MODULE}/${CVSGIT_ENTRY}
    echo $ $cmd
    $cmd
@@ -166,7 +178,12 @@ echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
 # Define the main command to import from cvs to git. Also works when run for the
 # first time in 'init' mode
-cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
+if [ "$CVSGIT_ENTRY" == "soft" ]
+then
+   cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
+else
+   cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
+fi
 
 # If this is the first time import just execute the import command and exit
 if [ "$CVSGIT_MODE" == "init" ]
