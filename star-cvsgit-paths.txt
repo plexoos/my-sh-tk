@@ -1,0 +1,20 @@
+# A file for rsync that contains include/exclude patterns (one per line)
+#
+# included paths start with '+ '
+# excluded paths start with '- '
+
+- Cons
+- CVSROOT
+- Dsv
+- HISTORY
+- obsolete
+- offline
+- online
+- pams/sim/gphysdata
+- quaranteene.zip
+- RealFiles.lis
+- root
+- root3
+- root5
+- StarGenerator/UrQMD3_3_1
+- StarVMC/geant3
