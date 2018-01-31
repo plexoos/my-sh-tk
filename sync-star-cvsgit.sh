@@ -24,7 +24,7 @@
 # When export for the first time use the 'init' mode to create a new git
 # repository. E.g.:
 #
-#     sync-star-cvsgit.sh muDst init
+#     PREFIX=/tmp sync-star-cvsgit.sh muDst init
 #
 # For subsequent updates of an existing git repository use the 'update' mode.
 # E.g.:
@@ -38,8 +38,9 @@
 
 
 # Set typical default values for script variables
-: ${LOCAL_CVSROOT_DIR:="${HOME}/star-cvs"}
-: ${LOCAL_GIT_DIR:="${HOME}/star-bnl"}
+: ${PREFIX:="${HOME}"}
+: ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs"}
+: ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
 : ${CVSGIT_AUTHORS:="star-cvsgit-authors.txt"}
 : ${CVSGIT_MODE:="update"}
