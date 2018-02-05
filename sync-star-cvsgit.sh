@@ -178,6 +178,12 @@ echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
 # Define the main command to import from cvs to git. Also works when run for the
 # first time in 'init' mode
+#
+# ...but first get the list of authors
+base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.${CVSGIT_AUTHORS}"
+# ... and reset the value to the new path
+CVSGIT_AUTHORS="/tmp/.${CVSGIT_AUTHORS}"
+
 if [ "$CVSGIT_ENTRY" == "soft" ]
 then
    cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
@@ -190,6 +196,8 @@ if [ "$CVSGIT_MODE" == "init" ]
 then
    echo $ ${cmd_git_cvsimport}
    ${cmd_git_cvsimport} &> /dev/null
+   # Delete author list
+   rm ${CVSGIT_AUTHORS}
    exit 0
 fi
 
@@ -209,6 +217,8 @@ else
    echo -e "fatal: cvs/master branch not found. Exiting...\n"
    echo -e "Try using 'init' argument:"
    echo -e "$ ${0##*/} <git-repo-id> [update|init]\n"
+   # Delete author list
+   rm ${CVSGIT_AUTHORS}
    exit 1
 fi
 
@@ -217,6 +227,9 @@ git checkout -B cvs cvs/master
 # Run the main cvs-import/git-update command
 echo $ ${cmd_git_cvsimport}
 ${cmd_git_cvsimport} &> /dev/null
+
+# Delete author list
+rm ${CVSGIT_AUTHORS}
 
 git ls-remote --exit-code . origin/master &> /dev/null
 
