@@ -205,7 +205,7 @@ then
    echo $ ${cmd_git_cvsimport}
    ${cmd_git_cvsimport} &> /dev/null
    # Delete author list
-   rm ${CVSGIT_AUTHORS}
+   [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
    exit 0
 fi
 
@@ -226,7 +226,7 @@ else
    echo -e "Try using 'init' argument:"
    echo -e "$ ${0##*/} <git-repo-id> [update|init]\n"
    # Delete author list
-   rm ${CVSGIT_AUTHORS}
+   [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
    exit 1
 fi
 
@@ -237,7 +237,7 @@ echo $ ${cmd_git_cvsimport}
 ${cmd_git_cvsimport} &> /dev/null
 
 # Delete author list
-rm ${CVSGIT_AUTHORS}
+[[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
 
 git ls-remote --exit-code . origin/master &> /dev/null
 
