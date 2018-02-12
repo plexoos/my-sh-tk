@@ -25,6 +25,7 @@
 # repository. E.g.:
 #
 #     PREFIX=/tmp sync-star-cvsgit.sh muDst init
+#     PREFIX=/tmp CVSGIT_AUTHORS=none sync-star-cvsgit.sh cvs init
 #
 # For subsequent updates of an existing git repository use the 'update' mode.
 # E.g.:
@@ -39,7 +40,7 @@
 
 # Set typical default values for script variables
 : ${PREFIX:="${HOME}"}
-: ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs"}
+: ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs-local"}
 : ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
 : ${CVSGIT_AUTHORS:="star-cvsgit-authors.txt"}
@@ -91,6 +92,7 @@ CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tp
 CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
 # All CVS modules into a single git repo, CVS_TOP_MODULE unused
 CVSGIT_MODULE_MAP["soft"]="soft"
+CVSGIT_MODULE_MAP["cvs"]="cvs"
 
 
 # Check input arguments provided by user
@@ -118,7 +120,7 @@ fi
 
 # Special cases
 case "${CVSGIT_MODULE}" in
-"soft")
+"soft" | "cvs")
    CVS_TOP_MODULE="unused"
    ;;
 "pams")
@@ -160,7 +162,7 @@ $cmd
 # Now sync all local CVS submodules with the central CVS repository
 for CVSGIT_ENTRY in ${CVSGIT_MODULE_MAP[$CVSGIT_MODULE]}
 do
-   if [ "$CVSGIT_ENTRY" == "soft" ]
+   if [ "${CVSGIT_MODULE}" == "soft" -o "${CVSGIT_MODULE}" == "cvs" ]
    then
       cmd="rsync -a --delete --exclude-from=star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    else
@@ -180,15 +182,21 @@ echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 # first time in 'init' mode
 #
 # ...but first get the list of authors
-base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.${CVSGIT_AUTHORS}"
-# ... and reset the value to the new path
-CVSGIT_AUTHORS="/tmp/.${CVSGIT_AUTHORS}"
+CVSGIT_AUTHORS_OPTION=""
 
-if [ "$CVSGIT_ENTRY" == "soft" ]
+if [ "${CVSGIT_AUTHORS}" != "none" ]
 then
-   cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
+   base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.${CVSGIT_AUTHORS}"
+   # ... and reset the value to the new path
+   CVSGIT_AUTHORS="/tmp/.${CVSGIT_AUTHORS}"
+   CVSGIT_AUTHORS_OPTION=" -A /tmp/.${CVSGIT_AUTHORS}"
+fi
+
+if [ "${CVSGIT_MODULE}" == "soft" -o "${CVSGIT_MODULE}" == "cvs" ]
+then
+   cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
 else
-   cmd_git_cvsimport="git cvsimport -a -v -r cvs -A ${CVSGIT_AUTHORS} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
+   cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
 fi
 
 # If this is the first time import just execute the import command and exit
