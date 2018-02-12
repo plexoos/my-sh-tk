@@ -234,18 +234,14 @@ rm ${CVSGIT_AUTHORS}
 git ls-remote --exit-code . origin/master &> /dev/null
 
 # Check the exit code of the previous command
+# Push commits into existing repo
 if [ "$?" -eq "0" ]
 then
    echo -e "Found remote origin/master"
-else
-   echo -e "Remote origin/master not found. Creating one..."
-   git remote add origin "git@github.com:star-bnl/star-${CVSGIT_MODULE}.git"
-   git fetch origin
+   git remote -v
+   git push origin cvs
+   git push --tags
+   git checkout -B master origin/master
 fi
-
-git remote -v
-git push origin cvs
-git push --tags
-git checkout -B master origin/master
 
 exit 0
