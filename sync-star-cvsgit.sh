@@ -148,7 +148,6 @@ mkdir -p "${LOCAL_CVSROOT_DIR}"
 mkdir -p "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}"
 mkdir -p "${LOCAL_GIT_DIR}"
 
-ln -fs ../CVSROOT "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
 
 # Sync local CVSROOT with the central CVS repository
 cmd="rsync -a --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
@@ -166,7 +165,7 @@ do
    then
       cmd="rsync -a --delete --exclude-from=star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    else
-      cmd="rsync -a --delete -R ${CVSROOT}/./${CVS_TOP_MODULE}/${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+      cmd="rsync -a --delete -R ${CVSROOT}/${CVS_TOP_MODULE}/./${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    fi
 
    echo ---\> Updating local CVS module... ${CVSGIT_MODULE}/${CVSGIT_ENTRY}
@@ -192,12 +191,7 @@ then
    CVSGIT_AUTHORS_OPTION=" -A /tmp/.${CVSGIT_AUTHORS}"
 fi
 
-if [ "${CVSGIT_MODULE}" == "soft" -o "${CVSGIT_MODULE}" == "cvs" ]
-then
-   cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
-else
-   cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE} ${CVS_TOP_MODULE}"
-fi
+cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
 
 # If this is the first time import just execute the import command and exit
 if [ "$CVSGIT_MODE" == "init" ]
