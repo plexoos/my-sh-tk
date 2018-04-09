@@ -25,7 +25,7 @@
 # repository. E.g.:
 #
 #     PREFIX=/tmp sync-star-cvsgit.sh muDst init
-#     PREFIX=/tmp CVSGIT_AUTHORS=none sync-star-cvsgit.sh cvs init
+#     PREFIX=/tmp CVSGIT_AUTHORS=none LOCAL_GIT_DIR=/tmp/star-bnl-readonly sync-star-cvsgit.sh cvs init
 #
 # For subsequent updates of an existing git repository use the 'update' mode.
 # E.g.:
@@ -209,14 +209,13 @@ cd "${LOCAL_GIT_DIR}" || exit
 # In case there are local changes stash them first
 git stash
 git rev-parse --verify cvs/master
-CVSGIT_BRANCH_EXISTS="$?"
 
 # Check the exit code of the previous command
-if [ "$CVSGIT_BRANCH_EXISTS" -eq "0" ]
+if [ "$?" -eq "0" ]
 then
    echo -e "Found cvs/master branch"
 else
-   echo -e "fatal: cvs/master branch not found. Exiting...\n"
+   echo -e "FATAL: cvs/master branch not found. Exiting...\n"
    echo -e "Try using 'init' argument:"
    echo -e "$ ${0##*/} <git-repo-id> [update|init]\n"
    # Delete author list
@@ -228,7 +227,7 @@ git checkout -B cvs cvs/master
 
 # Run the main cvs-import/git-update command
 echo $ ${cmd_git_cvsimport}
-${cmd_git_cvsimport} &> /dev/null
+${cmd_git_cvsimport} &> cvsimport.log
 
 # Delete author list
 [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
