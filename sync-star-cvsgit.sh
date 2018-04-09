@@ -188,7 +188,7 @@ then
    base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.${CVSGIT_AUTHORS}"
    # ... and reset the value to the new path
    CVSGIT_AUTHORS="/tmp/.${CVSGIT_AUTHORS}"
-   CVSGIT_AUTHORS_OPTION=" -A /tmp/.${CVSGIT_AUTHORS}"
+   CVSGIT_AUTHORS_OPTION=" -A ${CVSGIT_AUTHORS}"
 fi
 
 cmd_git_cvsimport="git cvsimport -a -v -r cvs ${CVSGIT_AUTHORS_OPTION} -C ${LOCAL_GIT_DIR} -d ${LOCAL_CVSROOT_DIR} ${CVSGIT_MODULE}"
