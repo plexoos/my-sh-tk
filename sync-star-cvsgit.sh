@@ -232,17 +232,35 @@ ${cmd_git_cvsimport} &> cvsimport.log
 # Delete author list
 [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
 
-git ls-remote --exit-code . origin/master &> /dev/null
+git ls-remote --exit-code cvs &> /dev/null
 
 # Check the exit code of the previous command
 # Push commits into existing repo
 if [ "$?" -eq "0" ]
 then
-   echo -e "Found remote origin/master"
+   echo -e "Found remote 'cvs'. Pushing all branches to remote 'cvs'"
+   git remote -v
+
+   cvs_branches=$(git branch -r)
+   
+   for cvs_branch in ${cvs_branches}
+   do
+      echo "cvs_branch: ${cvs_branch}"
+   
+      if [[ $cvs_branch =~ ^cvs\/(.*)$ && "${BASH_REMATCH[1]}" != "HEAD" ]]
+      then
+          branch_to_export="${BASH_REMATCH[1]}"
+          git br -f ${branch_to_export} cvs/${branch_to_export}
+          git push cvs ${branch_to_export}
+          git br -D ${branch_to_export}
+      fi
+   done
+
+   git push cvs --tags
+else
+   echo -e "Remote 'cvs' not found. Pushing 'cvs' branch to 'origin'"
    git remote -v
    git push origin cvs
-   git push --tags
-   git checkout -B master origin/master
 fi
 
 exit 0
