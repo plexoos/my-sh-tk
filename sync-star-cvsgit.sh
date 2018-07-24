@@ -50,46 +50,9 @@
 # Predefined map linking CVS modules to proposed git repositories
 declare -A CVSGIT_MODULE_MAP
 
-CVSGIT_MODULE_MAP["base"]="macros Star2Root StarClassLibrary StarMagField StarRoot St_base StBFChain StBichsel StChain StIOMaker StMagF StStarLogger StTreeMaker StUtilities"
-CVSGIT_MODULE_MAP["stevent"]="StAssociationMaker StEvent StEventCompendiumMaker StEventMaker StEventUtilities StMcEvent StMcEventMaker"
-CVSGIT_MODULE_MAP["picoDst"]="StPicoDstMaker StPicoEvent"
-CVSGIT_MODULE_MAP["muDst"]="StMuDSTMaker StStrangeMuDstMaker"
-CVSGIT_MODULE_MAP["detectors"]="StTpcCalibrationMaker StTpcDb StTpcEvalMaker StTpcHitMaker StTpcHitMoverMaker \
-   StTpcPool StTpcRSMaker StTpcTagMaker StdEdxY2Maker \
-   StFtpcCalibMaker StFtpcClusterMaker StFtpcDriftMapMaker StFtpcMixerMaker StFtpcSlowSimMaker StFtpcTrackMaker \
-   StIstClusterMaker StIstDbMaker StIstHitMaker StIstRawHitMaker StIstSimMaker StIstUtil \
-   StPxlClusterMaker StPxlDbMaker StPxlHitMaker StPxlRawHitMaker StPxlSimMaker StPxlUtil \
-   StMtdCalibMaker StMtdEvtFilterMaker StMtdHitMaker StMtdMatchMaker StMtdQAMaker StMtdSimMaker StMtdUtil \
-   StPmdCalibrationMaker StPmdClusterMaker StPmdDiscriminatorMaker StPmdReadMaker StPmdSimulatorMaker StPmdUtil \
-   StHbtMaker \
-   StFgtA2CMaker StFgtClusterMaker StFgtDbMaker StFgtPointMaker StFgtPool StFgtRawMaker StFgtSimulatorMaker StFgtUtil \
-   StEmcADCtoEMaker StEmcCalibrationMaker StEmcMixerMaker StEmcPool StEmcRawMaker StEmcSimulatorMaker StEmcTriggerMaker StEmcUtil \
-   StEEmcDbMaker StEEmcPool StEEmcSimulatorMaker StEEmcUtil StPreEclMaker StEpcMaker \
-   StEpdDbMaker \
-   StBTofCalibMaker StBTofHitMaker StBTofMatchMaker StBTofMixerMaker StBTofPool StBTofSimMaker StBTofUtil \
-   StTofCalibMaker StTofHitMaker StTofMaker StTofPool StTofSimMaker StTofUtil StTofpMatchMaker StTofrMatchMaker \
-   StFmsDbMaker StFmsFastSimulatorMaker StFmsFpsMaker StFmsHitMaker StFmsPointMaker StFmsUtil \
-   StVpdCalibMaker StVpdSimMaker \
-   StSvtAlignMaker StSvtCalibMaker StSvtClassLibrary StSvtClusterMaker StSvtDaqMaker StSvtDbMaker StSvtPool StSvtSelfMaker StSvtSeqAdjMaker StSvtSimulationMaker \
-   StSstDaqMaker StSstPointMaker StSstUtil StSsdClusterMaker StSsdDaqMaker StSsdDbMaker StSsdEvalMaker StSsdFastSimMaker StSsdPointMaker StSsdSimulationMaker StSsdUtil \
-   "
-CVSGIT_MODULE_MAP["track"]="Sti StiCA StiEmc StiEvaluator StiFtpc StiGui StiIst StiMaker StiPixel StiPxl StiRnD \
-   StiSsd StiSvt StiTpc StiUtilities Stv StvMaker StvSeed StvUtil TPCCATracker \
-   "
+# A single map element defines how to export selected CVS modules to a single git repository
 CVSGIT_MODULE_MAP["vertex"]="StGenericVertexMaker StZdcVertexMaker StSecondaryVertexMaker"
-CVSGIT_MODULE_MAP["RTS"]="RTS"
-CVSGIT_MODULE_MAP["db"]="StDbBroker StDbLib St_db_Maker StDbUtilities StDetectorDbMaker"
-CVSGIT_MODULE_MAP["daq-trg"]="StDaqLib StDAQMaker StTriggerData StTriggerDataMaker StTriggerUtilities \
-   StTrgDatFileReader StTrgMaker Stl3RawReaderMaker Stl3Util"
-CVSGIT_MODULE_MAP["geant"]="St_geant_Maker"
-CVSGIT_MODULE_MAP["phys"]="StGammaMaker StRefMultCorr StJetFinder StJetMaker StSpinPool StHeavyTagMaker \
-   StHighPtTagsMaker StTagsMaker St_QA_Maker StAnalysisMaker StAnalysisUtilities \
-   "
 
-# pams is outside of StRoot therefore it requires CVS_TOP_MODULE=pams
-CVSGIT_MODULE_MAP["pams"]="ctf ebye emc ftpc global l3 mwc sim svt tables tls tpc trg vpd"
-# vmc is outside of StRoot therefore it requires CVS_TOP_MODULE=StarVMC
-CVSGIT_MODULE_MAP["vmc"]="Geometry StarAgmlChecker StarAgmlLib StarAgmlUtil StarAgmlViewer StarGeometry StarVMCApplication StVMCMaker StVmcTools xgeometry"
 # All CVS modules into a single git repo, CVS_TOP_MODULE unused
 CVSGIT_MODULE_MAP["soft"]="soft"
 CVSGIT_MODULE_MAP["cvs"]="cvs"
