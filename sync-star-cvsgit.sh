@@ -46,12 +46,15 @@
 #
 
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
 # Set typical default values for script variables
 : ${PREFIX:="${HOME}"}
 : ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs-local"}
 : ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
-: ${CVSGIT_AUTHORS:="star-cvsgit-authors.txt"}
+: ${CVSGIT_AUTHORS:="${SCRIPT_DIR}/star-cvsgit-authors.txt"}
 : ${CVSGIT_MODE:="update"}
 
 
@@ -112,6 +115,7 @@ echo -e "\t LOCAL_CVSROOT_DIR:  \"$LOCAL_CVSROOT_DIR\""
 echo -e "\t LOCAL_GIT_DIR:      \"$LOCAL_GIT_DIR\""
 echo -e "\t CVS_TOP_MODULE:     \"$CVS_TOP_MODULE\""
 echo -e "\t CVSGIT_AUTHORS:     \"$CVSGIT_AUTHORS\""
+echo -e "\t SCRIPT_DIR:         \"$SCRIPT_DIR\""
 
 # Create output directories
 mkdir -p "${LOCAL_CVSROOT_DIR}"
@@ -133,7 +137,7 @@ for CVSGIT_ENTRY in ${CVSGIT_MODULE_MAP[$CVSGIT_MODULE]}
 do
    if [ "${CVSGIT_MODULE}" == "soft" -o "${CVSGIT_MODULE}" == "cvs" ]
    then
-      cmd="rsync -a --delete --exclude-from=star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+      cmd="rsync -a --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    else
       cmd="rsync -a --delete -R ${CVSROOT}/${CVS_TOP_MODULE}/./${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    fi
