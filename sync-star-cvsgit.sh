@@ -97,12 +97,6 @@ case "${CVSGIT_MODULE}" in
 "soft" | "cvs")
    CVS_TOP_MODULE="unused"
    ;;
-"pams")
-   CVS_TOP_MODULE="pams"
-   ;;
-"StarVMC")
-   CVS_TOP_MODULE="StarVMC"
-   ;;
 *)
    #do_nothing
    ;;
@@ -124,7 +118,7 @@ mkdir -p "${LOCAL_GIT_DIR}"
 
 
 # Sync local CVSROOT with the central CVS repository
-cmd="rsync -a --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
+cmd="rsync -a --omit-dir-times --no-perms --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
 
 echo
 echo ---\> Updating local CVSROOT directory... ${LOCAL_CVSROOT_DIR}/CVSROOT
@@ -137,9 +131,9 @@ for CVSGIT_ENTRY in ${CVSGIT_MODULE_MAP[$CVSGIT_MODULE]}
 do
    if [ "${CVSGIT_MODULE}" == "soft" -o "${CVSGIT_MODULE}" == "cvs" ]
    then
-      cmd="rsync -a --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+      cmd="rsync -a --omit-dir-times --no-perms --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    else
-      cmd="rsync -a --delete -R ${CVSROOT}/${CVS_TOP_MODULE}/./${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
+      cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVSROOT}/${CVS_TOP_MODULE}/./${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    fi
 
    echo ---\> Updating local CVS module... ${CVSGIT_MODULE}/${CVSGIT_ENTRY}
@@ -159,9 +153,9 @@ CVSGIT_AUTHORS_OPTION=""
 
 if [ "${CVSGIT_AUTHORS}" != "none" ]
 then
-   base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.${CVSGIT_AUTHORS}"
-   # ... and reset the value to the new path
-   CVSGIT_AUTHORS="/tmp/.${CVSGIT_AUTHORS}"
+   base64 -d < ${CVSGIT_AUTHORS} > "/tmp/.star-cvsgit-authors-decoded.txt"
+   # ... and now set the variable to the new path
+   CVSGIT_AUTHORS="/tmp/.star-cvsgit-authors-decoded.txt"
    CVSGIT_AUTHORS_OPTION=" -A ${CVSGIT_AUTHORS}"
 fi
 
@@ -201,7 +195,7 @@ git checkout -B cvs cvs/master
 
 # Run the main cvs-import/git-update command
 echo $ ${cmd_git_cvsimport}
-${cmd_git_cvsimport} &> cvsimport.log
+${cmd_git_cvsimport} &> /dev/null
 
 # Delete author list
 [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
@@ -225,9 +219,9 @@ then
       if [[ $cvs_branch =~ ^cvs\/(.*)$ && "${BASH_REMATCH[1]}" != "HEAD" ]]
       then
           branch_to_export="${BASH_REMATCH[1]}"
-          git br -f ${branch_to_export} cvs/${branch_to_export}
+          git branch -f ${branch_to_export} cvs/${branch_to_export}
           git push cvs ${branch_to_export}
-          git br -D ${branch_to_export}
+          git branch -D ${branch_to_export}
       fi
    done
 
