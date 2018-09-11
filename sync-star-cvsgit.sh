@@ -21,20 +21,28 @@
 # How to use
 # ----------
 #
-# When export for the first time use the 'init' mode to create a new git
+# 1. When export for the first time use the 'init' mode to create a new git
 # repository. E.g.:
 #
 #     PREFIX=/tmp sync-star-cvsgit.sh muDst init
 #     PREFIX=/tmp CVSGIT_AUTHORS=none LOCAL_GIT_DIR=/tmp/star-bnl-readonly sync-star-cvsgit.sh cvs init
 #
-# For subsequent updates of an existing git repository use the 'update' mode.
+# 2. Configure the newly created local Git repository.
+#
+#     cd /tmp/star-bnl-readonly/star-cvs
+#     git remote add cvs git@github.com:star-bnl/star-cvs.git
+#     git checkout -b cvs --track cvs/master
+#     git push --all cvs
+#     git push --tags cvs
+#
+# 3. For subsequent updates of an existing git repository use the 'update' mode.
 # E.g.:
 #
-#     sync-star-cvsgit.sh bfchain [update]
+#     sync-star-cvsgit.sh cvs [update]
 #
-# To export a commit from a git repository to CVS:
+# 4. To export a commit from a git repository to CVS do:
 #
-#     git cvsexportcommit -w /path/to/cvs/checkout -v -u -p -c <sha1_id>
+#     git cvsexportcommit -w /path/to/cvs/checkout -v -u -p -c <commit_sha1_id>
 #
 
 
@@ -65,7 +73,7 @@ then
    LOCAL_GIT_DIR="${LOCAL_GIT_DIR}/star-${CVSGIT_MODULE}"
 else
    echo "ERROR: First parameter must be provided:"
-   echo "$ ${0##*/} muDst|fgt|vertex [update|init]"
+   echo "$ ${0##*/} vertex|cvs|soft|... [update|init]"
    exit 1
 fi
 
@@ -76,7 +84,7 @@ then
       CVSGIT_MODE=$2
    else
       echo "ERROR: Second parameter must be either \"update\" (default) or \"init\":"
-      echo "$ ${0##*/} fgt|vertex|... [update|init]"
+      echo "$ ${0##*/} vertex|cvs|soft|... [update|init]"
       exit 1
    fi
 fi
@@ -96,7 +104,6 @@ case "${CVSGIT_MODULE}" in
    #do_nothing
    ;;
 esac
-
 
 # Just print out the variable's values for the record
 echo "The following variables are set:"
@@ -136,7 +143,7 @@ do
    $cmd
 done
 
-# Finally import changes from CVS to git repo
+# Now import changes from CVS to git repo
 echo
 echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
@@ -166,7 +173,7 @@ then
    exit 0
 fi
 
-# Proceed only in case of update
+# Proceed only in case of 'update'
 cd "${LOCAL_GIT_DIR}" || exit
 
 # In case there are local changes stash them first
@@ -195,6 +202,7 @@ ${cmd_git_cvsimport} &> cvsimport.log
 # Delete author list
 [[ "${CVSGIT_AUTHORS}" != "none" ]] && rm ${CVSGIT_AUTHORS}
 
+# Check if an appropriate remote exists
 git ls-remote --exit-code cvs &> /dev/null
 
 # Check the exit code of the previous command
@@ -205,11 +213,11 @@ then
    git remote -v
 
    cvs_branches=$(git branch -r)
-   
+
    for cvs_branch in ${cvs_branches}
    do
       echo "cvs_branch: ${cvs_branch}"
-   
+
       if [[ $cvs_branch =~ ^cvs\/(.*)$ && "${BASH_REMATCH[1]}" != "HEAD" ]]
       then
           branch_to_export="${BASH_REMATCH[1]}"
