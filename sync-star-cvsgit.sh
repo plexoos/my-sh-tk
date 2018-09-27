@@ -24,6 +24,7 @@
 # 1. When export for the first time use the 'init' mode to create a new git
 # repository. E.g.:
 #
+#     PREFIX=/tmp sync-star-cvsgit.sh cvs rsync
 #     PREFIX=/tmp sync-star-cvsgit.sh muDst init
 #     PREFIX=/tmp CVSGIT_AUTHORS=none LOCAL_GIT_DIR=/tmp/star-bnl-readonly sync-star-cvsgit.sh cvs init
 #
@@ -82,12 +83,12 @@ fi
 
 if [ -n "$2" ]
 then
-   if [ "$2" == "init" ] || [ "$2" == "update" ]
+   if [ "$2" == "rsync" -o "$2" == "init" -o "$2" == "update" ]
    then
       CVSGIT_MODE=$2
    else
-      echo "ERROR: Second parameter must be either \"update\" (default) or \"init\":"
-      echo "$ ${0##*/} vertex|cvs|soft|... [update|init]"
+      echo "ERROR: Second parameter must be either \"update\" (default), \"rsync\", or \"init\":"
+      echo "$ ${0##*/} vertex|cvs|soft|... [rsync|init|update]"
       exit 1
    fi
 fi
@@ -140,6 +141,13 @@ do
    echo $ $cmd
    $cmd
 done
+
+if [ "$CVSGIT_MODE" == "rsync" ]
+then
+   echo
+   echo ---\> Done copying from ${CVSROOT} to local ${LOCAL_CVSROOT_DIR}
+   exit 0
+fi
 
 # Now import changes from CVS to git repo
 echo
