@@ -52,6 +52,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Set typical default values for script variables
 : ${PREFIX:="${HOME}"}
+: ${CVSROOT:="/afs/rhic.bnl.gov/star/packages/repository"}
 : ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs-local"}
 : ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl"}
 : ${CVS_TOP_MODULE:="StRoot"}
@@ -65,7 +66,7 @@ declare -A CVSGIT_MODULE_MAP
 # A single map element defines how to export selected CVS modules to a single git repository
 CVSGIT_MODULE_MAP["vertex"]="StGenericVertexMaker StZdcVertexMaker StSecondaryVertexMaker"
 
-# All CVS modules into a single git repo, CVS_TOP_MODULE unused
+# All CVS modules into a single git repo, CVS_TOP_MODULE is unused in this case
 CVSGIT_MODULE_MAP["soft"]="soft"
 CVSGIT_MODULE_MAP["cvs"]="cvs"
 
@@ -105,6 +106,7 @@ esac
 
 # Just print out the variable's values for the record
 echo "The following variables are set:"
+echo -e "\t CVSROOT:            \"$CVSROOT\""
 echo -e "\t CVSGIT_MODULE:      \"$CVSGIT_MODULE\""
 echo -e "\t LOCAL_CVSROOT_DIR:  \"$LOCAL_CVSROOT_DIR\""
 echo -e "\t LOCAL_GIT_DIR:      \"$LOCAL_GIT_DIR\""
@@ -115,8 +117,6 @@ echo -e "\t SCRIPT_DIR:         \"$SCRIPT_DIR\""
 # Create output directories
 mkdir -p "${LOCAL_CVSROOT_DIR}"
 mkdir -p "${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}"
-mkdir -p "${LOCAL_GIT_DIR}"
-
 
 # Sync local CVSROOT with the central CVS repository
 cmd="rsync -a --omit-dir-times --no-perms --delete ${CVSROOT}/CVSROOT ${LOCAL_CVSROOT_DIR}/"
@@ -124,7 +124,6 @@ cmd="rsync -a --omit-dir-times --no-perms --delete ${CVSROOT}/CVSROOT ${LOCAL_CV
 echo
 echo ---\> Updating local CVSROOT directory... ${LOCAL_CVSROOT_DIR}/CVSROOT
 echo $ $cmd
-echo
 $cmd
 
 # Now sync all local CVS submodules with the central CVS repository
@@ -137,6 +136,7 @@ do
       cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVSROOT}/${CVS_TOP_MODULE}/./${CVSGIT_ENTRY} ${LOCAL_CVSROOT_DIR}/${CVSGIT_MODULE}/"
    fi
 
+   echo
    echo ---\> Updating local CVS module... ${CVSGIT_MODULE}/${CVSGIT_ENTRY}
    echo $ $cmd
    $cmd
@@ -150,6 +150,10 @@ then
 fi
 
 # Now import changes from CVS to git repo
+
+# Create output directories
+mkdir -p "${LOCAL_GIT_DIR}"
+
 echo
 echo ---\> Syncing ${LOCAL_GIT_DIR} ...
 
@@ -191,7 +195,7 @@ if [ "$?" -eq "0" ]
 then
    echo -e "Found cvs/master branch"
 else
-   echo -e "FATAL: cvs/master branch not found. Exiting...\n"
+   echo -e "FATAL: cvs/master branch not found\n"
    echo -e "Try using 'init' argument:"
    echo -e "$ ${0##*/} <git-repo-id> [update|init]\n"
    # Delete author list
