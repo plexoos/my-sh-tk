@@ -21,7 +21,7 @@ echo -- Done
 
 echo
 echo -- Step 2. Creating Git blob files from the local CVS repository
-cvs2git --fallback-encoding=ascii --use-external-blob-generator \
+cvs2git --fallback-encoding=ascii --use-rcs --co=/usr/local/bin/co --force-keyword-mode=kept \
         --blobfile=${PREFIX}/git-blob.dat \
         --dumpfile=${PREFIX}/git-dump.dat \
         --username=cvs2git ${LOCAL_CVSROOT_DIR}/cvs &> ${PREFIX}/sync-star-cvs2git-cron-step2.log
