@@ -40,6 +40,7 @@ java -jar ${PREFIX}/bfg-1.13.0.jar --delete-folders .git --delete-files .git --n
 git remote add origin git@github.com-starbnlbot:star-bnl/star-cvs.git
 git push origin --all
 git push origin --tags
+chmod -R g+w ./
 echo -- Done
 
 echo
