@@ -11,7 +11,7 @@ date
 
 # Set the variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export CVSROOT="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"
+export CVS_DIR="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"
 export PREFIX="/scratch/smirnovd/star-bnl-readonly"
 export LOCAL_CVSROOT_DIR="${PREFIX}/star-cvs-local"
 
@@ -23,16 +23,16 @@ echo
 echo -- Step 1. Updating local copy of CVS repository in ${LOCAL_CVSROOT_DIR}
 
 mkdir -p "${LOCAL_CVSROOT_DIR}"
-#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete -R ${CVSROOT}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
-cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVSROOT}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
+#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete -R ${CVS_DIR}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
+cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVS_DIR}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
 echo
 echo ---\> Updating local CVSROOT in ${LOCAL_CVSROOT_DIR}
 echo $ $cmd
 $cmd
 
 mkdir -p "${LOCAL_CVSROOT_DIR}/cvs"
-#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/cvs"
-cmd="rsync -a --omit-dir-times --no-perms --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/cvs"
+#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVS_DIR}/./* ${LOCAL_CVSROOT_DIR}/cvs"
+cmd="rsync -a --omit-dir-times --no-perms --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVS_DIR}/./* ${LOCAL_CVSROOT_DIR}/cvs"
 echo
 echo ---\> Updating local CVS modules in ${LOCAL_CVSROOT_DIR}/cvs
 echo $ $cmd
