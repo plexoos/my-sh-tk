@@ -20,6 +20,11 @@ ${SCRIPT_DIR}/sync-star-cvsgit.sh cvs rsync
 echo -- Done
 
 echo
+echo -- Step 1a. Clean up local copy of CVS repository in ${LOCAL_CVSROOT_DIR}/cvs
+rm -fr ${LOCAL_CVSROOT_DIR}/cvs/StarDb/Geometry/tpc/tpcPadPlanes.dev2019.C,v
+echo -- Done
+
+echo
 echo -- Step 2. Creating Git blob files from the local CVS repository
 cvs2git --fallback-encoding=ascii --use-rcs --co=/usr/local/bin/co --force-keyword-mode=kept \
         --blobfile=${PREFIX}/git-blob.dat \
