@@ -43,7 +43,7 @@ echo -- Done
 
 #
 # Re-create the actual git repository from the blob and dump files created build by cvs2git
-# Then checkout and push to the origin
+# Then checkout and push to the github and gitlab
 #
 export LOCAL_GIT_DIR="${PREFIX}/star-bnl/star-cvs"
 echo
@@ -55,9 +55,12 @@ git init
 cat ${PREFIX}/git-blob.dat ${PREFIX}/git-dump.dat | git fast-import
 git checkout
 java -jar ${PREFIX}/bfg-1.13.0.jar --delete-folders .git --delete-files .git --no-blob-protection ./
-git remote add origin git@github.com-starbnlbot:star-bnl/star-cvs.git
-git push origin --all
-git push origin --tags
+git remote add github git@github.com-starbnlbot:star-bnl/star-cvs.git
+git push github --all
+git push github --tags
+git remote add gitlab git@gitlab.com-starbnlbot:star-bnl/star-cvs.git
+git push gitlab --all
+git push gitlab --tags
 chmod -R g+w ./
 echo -- Done
 
