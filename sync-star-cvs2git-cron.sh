@@ -11,7 +11,7 @@ date
 
 # Set the variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export CVSROOT="/afs/rhic.bnl.gov/star/packages/repository"
+export CVSROOT="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"
 export PREFIX="/scratch/smirnovd/star-bnl-readonly"
 export LOCAL_CVSROOT_DIR="${PREFIX}/star-cvs-local"
 
