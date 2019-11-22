@@ -20,8 +20,22 @@ export LOCAL_CVSROOT_DIR="${PREFIX}/star-cvs-local"
 # Create or update a local copy of CVS repository
 #
 echo
-echo -- Step 1. Updating local copy of CVS repository in ${LOCAL_CVSROOT_DIR}/cvs
-${SCRIPT_DIR}/sync-star-cvsgit.sh cvs rsync
+echo -- Step 1. Updating local copy of CVS repository in ${LOCAL_CVSROOT_DIR}
+
+mkdir -p "${LOCAL_CVSROOT_DIR}"
+cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVSROOT}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
+echo
+echo ---\> Updating local CVSROOT in ${LOCAL_CVSROOT_DIR}
+echo $ $cmd
+$cmd
+
+mkdir -p "${LOCAL_CVSROOT_DIR}/cvs"
+cmd="rsync -a --omit-dir-times --no-perms --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVSROOT}/./* ${LOCAL_CVSROOT_DIR}/cvs"
+echo
+echo ---\> Updating local CVS modules in ${LOCAL_CVSROOT_DIR}/cvs
+echo $ $cmd
+$cmd
+
 echo -- Done
 
 echo
