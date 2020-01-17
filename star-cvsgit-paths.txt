@@ -5,6 +5,8 @@
 
 - Cons
 - CVSROOT
+- cgi
+- conf
 - Dsv
 - HISTORY
 - obsolete
