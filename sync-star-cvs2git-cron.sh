@@ -58,7 +58,7 @@ echo -- Done
 
 #
 # Re-create the actual git repository from the blob and dump files created build by cvs2git
-# Then checkout and push to the github and gitlab
+# Then checkout and push to github
 #
 echo
 echo -- Step 3. Recreating Git repository in ${LOCAL_GIT_DIR}
@@ -72,10 +72,6 @@ java -jar ${PREFIX}/bfg-1.13.0.jar --delete-folders .git --delete-files .git --n
 git remote add github git@github.com-starbnlbot:star-bnl/star-cvs.git
 git push github --all
 git push github --tags
-git remote add gitlab git@gitlab.com-starbnlbot:star-bnl/star-cvs.git
-git push gitlab --all
-git push gitlab --tags
-chmod -R g+w ./
 echo -- Done
 
 echo
