@@ -10,10 +10,11 @@ echo -- Start crontab job at
 date
 
 # Set the variables
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export CVS_DIR="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"
-export PREFIX="/scratch/smirnovd/star-bnl-readonly"
-export LOCAL_CVSROOT_DIR="${PREFIX}/star-cvs-local"
+: ${SCRIPT_DIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"}
+: ${CVS_DIR:="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"}
+: ${PREFIX:="/scratch/smirnovd/star-bnl-readonly"}
+: ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs-local"}
+: ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl/star-cvs"}
 
 
 #
@@ -61,7 +62,6 @@ echo -- Done
 # Re-create the actual git repository from the blob and dump files created build by cvs2git
 # Then checkout and push to the github and gitlab
 #
-export LOCAL_GIT_DIR="${PREFIX}/star-bnl/star-cvs"
 echo
 echo -- Step 3. Recreating Git repository in ${LOCAL_GIT_DIR}
 rm -fr "${LOCAL_GIT_DIR}"
