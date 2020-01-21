@@ -3,7 +3,7 @@
 # This script can be run as a crontab job to sync STAR CVS repository with the
 # remote Git repository github.com:star-bnl/star-cvs.git
 # 
-# 0 2,8,20 * * * /path/to/my-sh-tk/sync-star-cvs2git-cron.sh &> /path/to/my-sh-tk/sync-star-cvs2git-cron.log
+# 0 2,8,20 * * * CVS_HOST="rcas6010:" /path/to/my-sh-tk/sync-star-cvs2git-cron.sh &> /path/to/my-sh-tk/sync-star-cvs2git-cron.log
 #
 
 echo -- Start crontab job at
@@ -11,7 +11,8 @@ date
 
 # Set the variables
 : ${SCRIPT_DIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"}
-: ${CVS_DIR:="rcas6010:/afs/rhic.bnl.gov/star/packages/repository"}
+: ${CVS_HOST:=""}
+: ${CVS_DIR:="${CVS_HOST}/afs/rhic.bnl.gov/star/packages/repository"}
 : ${PREFIX:="/scratch/smirnovd/star-bnl-readonly"}
 : ${LOCAL_CVSROOT_DIR:="${PREFIX}/star-cvs-local"}
 : ${LOCAL_GIT_DIR:="${PREFIX}/star-bnl/star-cvs"}
