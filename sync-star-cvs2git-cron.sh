@@ -24,16 +24,14 @@ echo
 echo -- Step 1. Updating local copy of CVS repository in ${LOCAL_CVSROOT_DIR}
 
 mkdir -p "${LOCAL_CVSROOT_DIR}"
-#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete -R ${CVS_DIR}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
-cmd="rsync -a --omit-dir-times --no-perms --delete -R ${CVS_DIR}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
+cmd="rsync -a --omit-dir-times --chmod=Dug=rwx,Do=rx,Fug+rw,Fo+r --delete --delete-excluded -R ${CVS_DIR}/./CVSROOT ${LOCAL_CVSROOT_DIR}/"
 echo
 echo ---\> Updating local CVSROOT in ${LOCAL_CVSROOT_DIR}
 echo $ $cmd
 $cmd
 
 mkdir -p "${LOCAL_CVSROOT_DIR}/cvs"
-#cmd="rsync -a --omit-dir-times --chmod=ug=rwx,o=rx --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVS_DIR}/./* ${LOCAL_CVSROOT_DIR}/cvs"
-cmd="rsync -a --omit-dir-times --no-perms --delete --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVS_DIR}/./* ${LOCAL_CVSROOT_DIR}/cvs"
+cmd="rsync -a --omit-dir-times --chmod=Dug=rwx,Do=rx,Fug+rw,Fo+r --delete --delete-excluded --exclude-from=${SCRIPT_DIR}/star-cvsgit-paths.txt -R ${CVS_DIR}/./* ${LOCAL_CVSROOT_DIR}/cvs"
 echo
 echo ---\> Updating local CVS modules in ${LOCAL_CVSROOT_DIR}/cvs
 echo $ $cmd
