@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 #
 # This script can be run as a crontab job to sync STAR CVS repository with the
-# remote Git repository github.com:star-bnl/star-cvs.git
+# remote Git repository github.com:star-bnl/star-cvs.git. For example, the
+# following command can be added to the crontab:
 # 
-# 0 2,8,20 * * * CVS_HOST="rcas6010:" /path/to/my-sh-tk/sync-star-cvs2git-cron.sh &> /path/to/my-sh-tk/sync-star-cvs2git-cron.log
+# 0 2,8,20 * * * CVS_HOST="rcas6010:" /path/to/sync-star-cvs2git-cron.sh &> /path/to/sync-star-cvs2git-cron.log
+#
+# In order to push to the remote server the star-bnl-bot account should be set
+# up to authenticate with an SSH key.
 #
 
 echo -- Start crontab job at
 date
 
-# Set the variables
+# Set default values
 : ${SCRIPT_DIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"}
 : ${CVS_HOST:=""}
 : ${CVS_DIR:="${CVS_HOST}/afs/rhic.bnl.gov/star/packages/repository"}
@@ -57,22 +61,21 @@ cvs2git --fallback-encoding=ascii --use-rcs --co=/usr/local/bin/co --force-keywo
         --username=cvs2git ${LOCAL_CVSROOT_DIR}/cvs &> ${PREFIX}/sync-star-cvs2git-cron-step2.log
 echo -- Done
 
+
 #
-# Re-create the actual git repository from the blob and dump files created build by cvs2git
-# Then checkout and push to github
+# (Re-)create the actual git repository from the blob and dump files created by
+# cvs2git then check out the master branch and push everything to github
 #
 echo
 echo -- Step 3. Recreating Git repository in ${LOCAL_GIT_DIR}
-rm -fr "${LOCAL_GIT_DIR}"
-mkdir -p "${LOCAL_GIT_DIR}"
-cd "${LOCAL_GIT_DIR}"
+rm -fr ${LOCAL_GIT_DIR} && mkdir -p ${LOCAL_GIT_DIR} && cd ${LOCAL_GIT_DIR}
 git init
 cat ${PREFIX}/git-blob.dat ${PREFIX}/git-dump.dat | git fast-import
 git checkout
 java -jar ${PREFIX}/bfg-1.13.0.jar --delete-folders .git --delete-files .git --no-blob-protection ./
-git remote add github git@github.com-starbnlbot:star-bnl/star-cvs.git
-git push github --all
-git push github --tags
+git remote add origin git@github.com:star-bnl/star-cvs.git
+git push --all
+git push --tags
 echo -- Done
 
 echo
